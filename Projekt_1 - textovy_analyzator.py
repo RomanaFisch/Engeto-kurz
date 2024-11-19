@@ -1,9 +1,10 @@
-import sys
-#projekt_1.py: první projekt do Engeto Online Python Akademie
+
 # Autor: Romana Fischer
 # Email: romana.fisch@gmail.com
 # Discord: romca_28945
 
+import string
+import sys
 print("$ python projekt1.py")
 
 # Registrovaní uživatelé
@@ -40,6 +41,11 @@ in modern oceans. Other fish such as paddlefish,
 garpike and stingray are also present.'''
 ]
 
+# Funkce pro odstranění interpunkce
+def odstranit_interpunkci(text):
+    interpunkce = string.punctuation
+    return ''.join([char for char in text if char not in interpunkce])
+
 # Získání přihlašovacích údajů uživatele
 user_name = input("Zadej své jméno: ").lower()  # Převedeme jméno na malá písmena pro srovnání
 print("Username:", user_name)
@@ -58,18 +64,22 @@ else:
     print(separator)
 
 # Výběr textu
-try:
-    user_choice = int(input("Enter a number btw 1 and 3 to select: "))  # Uživatel zadá volbu textu
-    if user_choice < 1 or user_choice > 3:
-        print("This is not a correct choice, app is ending.")  # Nesprávná volba
-        sys.exit()
+while True:
+    try:
+        user_choice = int(input("Enter a number btw 1 and 3 to select: "))  # Uživatel zadá volbu textu
+        if user_choice < 1 or user_choice > 3:
+            print("Toto není správná volba, zkus to znovu.")
+            continue
+        text_choice = TEXTS[user_choice - 1]  # Vybereme text podle volby uživatele
+        print(f"Enter a number btw 1 and 3 to select: {user_choice}")
+        break  # Pokud je volba správná, pokračujeme
+    except ValueError:
+        print("Neplatný vstup, prosím zadej číslo mezi 1 a 3.")
+        
+print(separator)
 
-    text_choice = TEXTS[user_choice - 1]  # Vybereme text podle volby uživatele
-    print(f"Analyzing Text {user_choice}")
-    print(separator)
-
-except ValueError:
-    print("Invalid input, please enter a number between 1 and 3.")  # Ošetření chybného vstupu
+# Čistíme text od interpunkce před analýzou
+text_choice = odstranit_interpunkci(text_choice)
 
 # Analyzování vybraného textu
 words_number = len(text_choice.split())
@@ -100,7 +110,6 @@ print(f"There are {word_uppercase} uppercase words.")
 print(f"There are {word_lowercase} lowercase words.")
 print(f"There are {numeric} numeric strings.")
 print(f"The sum of all the numbers is {total_sum}.")
-print(separator)
 
 # Četnost různých délek slov v textu
 star = "*"
@@ -125,4 +134,11 @@ max_number = max(length_count.values())
 for length, count in sorted_lengths:
     how_many_spaces = max_number - count  # Počet mezer pro správné zarovnání
     print(f"{length:>3} | {star * count} {space * how_many_spaces} | {count:>2}")
+    
+    
+    
+
+
+
+
 
